@@ -1,7 +1,13 @@
 import React from 'react';
 import Axios from 'axios';
 
-export const Invoice = ({ invoice, id, getInvoices, editInvoice }) => {
+export const Invoice = ({
+  invoice,
+  id,
+  getInvoices,
+  editInvoice,
+  invoiceEditorOpen,
+}) => {
   const deleteInvoice = async () => {
     await Axios.delete(`http://localhost:5000/invoice/${id}`);
 

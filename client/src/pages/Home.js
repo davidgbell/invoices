@@ -23,6 +23,10 @@ export const Home = () => {
 
   const editInvoice = invoiceData => {
     setEditInvoiceData(invoiceData);
+    setEditorName(invoiceData.name);
+    setEditorStatus(invoiceData.status);
+    setEditorDate(invoiceData.dueDate);
+    setEditorAmount(invoiceData.amount);
     setInvoiceEditorOpen(true);
   };
 
@@ -36,7 +40,14 @@ export const Home = () => {
       status: editorStatus ? editorStatus : undefined,
     };
 
-    await Axios.post('http://localhost:5000/invoice/', invoiceData);
+    if (!editInvoiceData) {
+      await Axios.post('http://localhost:5000/invoice/', invoiceData);
+    } else {
+      await Axios.put(
+        `http://localhost:5000/invoice/${editInvoiceData._id}`,
+        invoiceData
+      );
+    }
 
     getInvoices();
     closeEditor();
@@ -69,6 +80,11 @@ export const Home = () => {
           setEditorDate={setEditorDate}
           setEditorStatus={setEditorStatus}
           setEditorName={setEditorName}
+          editorName={editorName}
+          editorAmount={editorAmount}
+          editorDate={editorDate}
+          editorStatus={editorStatus}
+          editInvoiceData={editInvoiceData}
         />
       )}
       {invoices && sortedInvoices && (
@@ -80,6 +96,7 @@ export const Home = () => {
               invoice={invoice}
               getInvoices={getInvoices}
               editInvoice={editInvoice}
+              invoiceEditorOpen={invoiceEditorOpen}
             />
           ))}
         </ul>

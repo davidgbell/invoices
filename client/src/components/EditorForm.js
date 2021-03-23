@@ -7,7 +7,14 @@ export const EditorForm = ({
   setEditorStatus,
   setEditorAmount,
   setEditorDate,
+  editorName,
+  editorDate,
+  editorStatus,
+  editorAmount,
+  editInvoiceData,
 }) => {
+  const formatDate = editorDate.split('').slice(0, 10).join('');
+
   return (
     <div>
       <form onSubmit={handleNewInvoice}>
@@ -16,10 +23,12 @@ export const EditorForm = ({
           required
           id='editor-name'
           type='text'
+          value={editorName}
           onChange={e => setEditorName(e.target.value)}
         />
         <label htmlFor='editor-date'>Due Date</label>
         <input
+          value={formatDate}
           required
           id='editor-date'
           type='date'
@@ -27,6 +36,7 @@ export const EditorForm = ({
         />
         <label htmlFor='editor-amount'>Amount</label>
         <input
+          value={editorAmount}
           required
           id='editor-amount'
           type='number'
@@ -34,6 +44,7 @@ export const EditorForm = ({
         />
         <label htmlFor='editor-status'>Status</label>
         <select
+          value={editorStatus}
           required
           id='editor-status'
           onChange={e => setEditorStatus(e.target.value)}>
@@ -42,7 +53,9 @@ export const EditorForm = ({
           <option value='pending'>Pending</option>
           <option value='paid'>Paid</option>
         </select>
-        <button type='submit'>Add invoice</button>
+        <button type='submit'>{`${
+          editInvoiceData ? 'Save' : 'Add Invoice'
+        }`}</button>
         <button onClick={closeEditor}>Cancel</button>
       </form>
     </div>
