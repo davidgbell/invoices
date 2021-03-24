@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 dotenv.config();
 
@@ -13,10 +14,12 @@ app.use(
     origin: 'http://localhost:3000',
   })
 );
+app.use(cookieParser());
 
 app.listen(5000, () => console.log('app running on server 5000'));
 
 app.use('/invoice', require('./routers/invoiceRouter'));
+app.use('/auth', require('./routers/userRouter'));
 
 // connect to mongo
 mongoose.connect(

@@ -1,17 +1,20 @@
 const router = require('express').Router();
 const { json } = require('express');
 const Invoice = require('../models/invoiceModel');
+const auth = require('../middleware/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
-    const invoices = await Invoice.find();
+    const token = req.cookies.token;
+
+    const invoices = await Invoice.find({ user: req.user });
     res.json(invoices);
   } catch (error) {
     return res.status(500).send(error);
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
     const { name, amount, status, dueDate } = req.body;
 
@@ -28,6 +31,7 @@ router.post('/', async (req, res) => {
       amount,
       status,
       dueDate,
+      user: req.user,
     });
 
     const savedInvoice = await newInvoice.save();
@@ -38,7 +42,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   try {
     const { name, amount, status, dueDate } = req.body;
 
@@ -60,6 +64,9 @@ router.put('/:id', async (req, res) => {
         errorMessage: 'No invoice found with this ID.',
       });
     }
+    if (originalInvoice.user.toString() !== req.user) {
+      return res.status(401).json({ errorMessage: 'Unauthorised' });
+    }
     originalInvoice.name = name;
     originalInvoice.amount = amount;
     originalInvoice.status = status;
@@ -73,7 +80,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     const invoiceId = req.params.id;
 
@@ -85,6 +92,10 @@ router.delete('/:id', async (req, res) => {
     }
 
     const existingInvoice = await Invoice.findById(invoiceId);
+
+    if (existingInvoice.user.toString() !== req.user) {
+      return res.status(401).json({ errorMessage: 'Unauthorised' });
+    }
 
     if (!existingInvoice) {
       return res.status(400).json({
