@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Axios from 'axios';
 import { Invoice } from '../components/Invoice';
 import { EditorForm } from '../components/EditorForm';
+import { UserContext } from '../context/UserContext';
+import { Link } from 'react-router-dom';
+import { ErrorMessage } from '../components/ErrorMessage';
 
 export const Home = () => {
   const [invoices, setInvoices] = useState([]);
@@ -11,10 +14,14 @@ export const Home = () => {
   const [editorAmount, setEditorAmount] = useState('');
   const [editorStatus, setEditorStatus] = useState('');
   const [editInvoiceData, setEditInvoiceData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    getInvoices();
-  }, []);
+    if (!user) {
+      setInvoices([]);
+    } else getInvoices();
+  }, [user]);
 
   const getInvoices = async () => {
     const res = await Axios.get('http://localhost:5000/invoice/');
@@ -40,13 +47,22 @@ export const Home = () => {
       status: editorStatus ? editorStatus : undefined,
     };
 
-    if (!editInvoiceData) {
-      await Axios.post('http://localhost:5000/invoice/', invoiceData);
-    } else {
-      await Axios.put(
-        `http://localhost:5000/invoice/${editInvoiceData._id}`,
-        invoiceData
-      );
+    try {
+      if (!editInvoiceData) {
+        await Axios.post('http://localhost:5000/invoice/', invoiceData);
+      } else {
+        await Axios.put(
+          `http://localhost:5000/invoice/${editInvoiceData._id}`,
+          invoiceData
+        );
+      }
+    } catch (err) {
+      if (err.response) {
+        if (err.response.data.errorMessage) {
+          setErrorMessage(err.response.data.errorMessage.toString());
+        }
+      }
+      return;
     }
 
     getInvoices();
@@ -69,25 +85,35 @@ export const Home = () => {
   return (
     <div>
       <h3>Home</h3>
-      {!invoiceEditorOpen && (
-        <button onClick={() => setInvoiceEditorOpen(true)}>Add new</button>
+      {!invoiceEditorOpen && user && (
+        <button onClick={() => setInvoiceEditorOpen(true)}>
+          Add new invoice
+        </button>
       )}
       {invoiceEditorOpen && (
-        <EditorForm
-          closeEditor={closeEditor}
-          handleNewInvoice={handleNewInvoice}
-          setEditorAmount={setEditorAmount}
-          setEditorDate={setEditorDate}
-          setEditorStatus={setEditorStatus}
-          setEditorName={setEditorName}
-          editorName={editorName}
-          editorAmount={editorAmount}
-          editorDate={editorDate}
-          editorStatus={editorStatus}
-          editInvoiceData={editInvoiceData}
-        />
+        <>
+          {errorMessage && (
+            <ErrorMessage
+              message={errorMessage}
+              clear={() => setErrorMessage(null)}
+            />
+          )}
+          <EditorForm
+            closeEditor={closeEditor}
+            handleNewInvoice={handleNewInvoice}
+            setEditorAmount={setEditorAmount}
+            setEditorDate={setEditorDate}
+            setEditorStatus={setEditorStatus}
+            setEditorName={setEditorName}
+            editorName={editorName}
+            editorAmount={editorAmount}
+            editorDate={editorDate}
+            editorStatus={editorStatus}
+            editInvoiceData={editInvoiceData}
+          />
+        </>
       )}
-      {invoices && sortedInvoices && (
+      {invoices && invoices.length > 0 && sortedInvoices && (
         <ul>
           {sortedInvoices.map(invoice => (
             <Invoice
@@ -100,6 +126,15 @@ export const Home = () => {
             />
           ))}
         </ul>
+      )}
+      {user === null && (
+        <>
+          <h2>Welcome to invoices</h2>
+          <p>
+            Don't have an account with us?{' '}
+            <Link to='/register'>Register here</Link>
+          </p>
+        </>
       )}
     </div>
   );

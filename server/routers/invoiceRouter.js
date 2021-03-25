@@ -65,7 +65,7 @@ router.put('/:id', auth, async (req, res) => {
       });
     }
     if (originalInvoice.user.toString() !== req.user) {
-      return res.status(401).json({ errorMessage: 'Unauthorised' });
+      return res.status(401).json({ errorMessage: 'Unauthorized' });
     }
     originalInvoice.name = name;
     originalInvoice.amount = amount;

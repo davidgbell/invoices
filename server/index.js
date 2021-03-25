@@ -12,11 +12,10 @@ app.use(express.json());
 app.use(
   cors({
     origin: 'http://localhost:3000',
+    credentials: true,
   })
 );
 app.use(cookieParser());
-
-app.listen(5000, () => console.log('app running on server 5000'));
 
 app.use('/invoice', require('./routers/invoiceRouter'));
 app.use('/auth', require('./routers/userRouter'));
@@ -30,6 +29,5 @@ mongoose.connect(
   },
   err => {
     if (err) return console.error(err);
-    console.log('Connected to MongoDB');
   }
 );
