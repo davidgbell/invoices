@@ -12,11 +12,17 @@ export const Navbar = () => {
     await getUser();
   };
   return (
-    <nav>
+    <nav className='mb-6'>
       <ul className='flex justify-between'>
         <div>
           <li>
-            <Link to='/'>Invoices</Link>
+            <Link to='/'>
+              <h1
+                className='
+              text-2xl font-extrabold leading-9 tracking-tight text-gray-900  sm:text-3xl sm:leading-10 md:text-4xl md:leading-14'>
+                Invoices
+              </h1>
+            </Link>
           </li>
         </div>
         <div className='flex justify-between'>

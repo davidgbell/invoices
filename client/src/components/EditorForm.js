@@ -54,7 +54,7 @@ export const EditorForm = ({
           <option value='paid'>Paid</option>
         </select>
         <div className='pt-6'>
-          <button className='mx-3' type='submit'>{`${
+          <button className='mr-3' type='submit'>{`${
             editInvoiceData ? 'Save' : 'Add Invoice'
           }`}</button>
           <button onClick={closeEditor}>Cancel</button>

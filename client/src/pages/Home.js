@@ -15,6 +15,7 @@ export const Home = () => {
   const [editorStatus, setEditorStatus] = useState('');
   const [editInvoiceData, setEditInvoiceData] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [searched, setSearched] = useState('');
   const { user } = useContext(UserContext);
 
   useEffect(() => {
@@ -115,29 +116,41 @@ export const Home = () => {
         </>
       )}
       {invoices && invoices.length > 0 && sortedInvoices && (
-        <ul>
-          {sortedInvoices.map(invoice => (
-            <Invoice
-              key={invoice._id}
-              id={invoice._id}
-              invoice={invoice}
-              getInvoices={getInvoices}
-              editInvoice={editInvoice}
-              invoiceEditorOpen={invoiceEditorOpen}
-            />
-          ))}
-        </ul>
+        <>
+          <label htmlFor='search'>Search:</label>
+          <input
+            id='search'
+            // onChange={e => setLoginEmail(e.target.value)}
+            type='text'
+            placeholder='Try a name or status 🕵️‍♀️'
+          />
+          <ul>
+            {sortedInvoices.map(invoice => (
+              <Invoice
+                key={invoice._id}
+                id={invoice._id}
+                invoice={invoice}
+                getInvoices={getInvoices}
+                editInvoice={editInvoice}
+                invoiceEditorOpen={invoiceEditorOpen}
+              />
+            ))}
+          </ul>
+        </>
       )}
       {user === null && (
         <>
-          <h3 className='text-3xl font-extrabold leading-9 tracking-tight text-gray-900  sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 py-6'>
-            Welcome
-          </h3>
-          <p>Invoices is a minimal invoice management application.</p>
-          <p>
-            Don't have an account with us?{' '}
-            <Link to='/register'>Register here</Link>
-          </p>
+          <div className='mb-10'>
+            <h3 className='text-3xl font-extrabold leading-9 tracking-tight text-gray-900  sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 py-6'>
+              Welcome
+            </h3>
+            <p>Invoices is a minimal invoice management application.</p>
+            <p>
+              Don't have an account with us?{' '}
+              <Link to='/register'>Register here</Link>
+            </p>
+          </div>
+          <img src='/screen.png' />
         </>
       )}
     </div>

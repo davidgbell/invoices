@@ -39,8 +39,10 @@ export const Login = () => {
 
   return (
     <div>
+      <h2 className='text-3xl font-extrabold leading-9 tracking-tight text-gray-900  sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 py-6'>
+        Login
+      </h2>
       <form onSubmit={login}>
-        <h2>login</h2>
         {errorMessage && (
           <ErrorMessage
             message={errorMessage}
@@ -63,7 +65,7 @@ export const Login = () => {
           required
           autoComplete='on'
         />
-        <button onClick={login} type='submit'>
+        <button className='my-4' onClick={login} type='submit'>
           Login
         </button>
       </form>

@@ -5,6 +5,7 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import { UserContext } from '../context/UserContext';
 
 export const Register = () => {
+  const [registerName, setRegisterName] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [verifyRegisterPassword, setVerifyRegisterPassword] = useState('');
@@ -18,6 +19,7 @@ export const Register = () => {
     e.preventDefault();
 
     const registerData = {
+      name: registerName,
       email: registerEmail,
       password: registerPassword,
       passwordVerify: verifyRegisterPassword,
@@ -41,7 +43,9 @@ export const Register = () => {
 
   return (
     <div>
-      <h2>Register</h2>
+      <h2 className='text-3xl font-extrabold leading-9 tracking-tight text-gray-900  sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 py-6'>
+        Register
+      </h2>
       {errorMessage && (
         <ErrorMessage
           message={errorMessage}
@@ -49,8 +53,18 @@ export const Register = () => {
         />
       )}
       <form onSubmit={register}>
+        <label htmlFor='name'>Name:</label>
+        <input
+          className='mb-6'
+          id='name'
+          onChange={e => setRegisterName(e.target.value)}
+          type='text'
+          required
+          autoComplete='on'
+        />
         <label htmlFor='email'>Email:</label>
         <input
+          className='mb-6'
           id='email'
           onChange={e => setRegisterEmail(e.target.value)}
           type='email'
@@ -59,6 +73,7 @@ export const Register = () => {
         />
         <label htmlFor='password'>Password:</label>
         <input
+          className='mb-6'
           id='password'
           onChange={e => setRegisterPassword(e.target.value)}
           type='password'
@@ -67,13 +82,14 @@ export const Register = () => {
         />
         <label htmlFor='verify-password'>Verify Password:</label>
         <input
+          className='mb-6'
           id='verify-password'
           onChange={e => setVerifyRegisterPassword(e.target.value)}
           type='password'
           required
           autoComplete='on'
         />
-        <button onClick={register} type='submit'>
+        <button className='mb-4' onClick={register} type='submit'>
           Register
         </button>
       </form>
