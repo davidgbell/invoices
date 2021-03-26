@@ -13,22 +13,26 @@ export const Navbar = () => {
   };
   return (
     <nav>
-      <ul>
-        <li>
-          <Link to='/'>Invoices</Link>
-        </li>
-        {user === null ? (
-          <>
-            <li>
-              <Link to='/login'>Login</Link>
-            </li>
-            <li>
-              <Link to='/register'>Register</Link>
-            </li>
-          </>
-        ) : (
-          user && <button onClick={logOut}>Log out</button>
-        )}
+      <ul className='flex justify-between'>
+        <div>
+          <li>
+            <Link to='/'>Invoices</Link>
+          </li>
+        </div>
+        <div className='flex justify-between'>
+          {user === null ? (
+            <>
+              <li className='pr-2'>
+                <Link to='/login'>Login</Link>
+              </li>
+              <li>
+                <Link to='/register'>Register</Link>
+              </li>
+            </>
+          ) : (
+            user && <button onClick={logOut}>Log out</button>
+          )}
+        </div>
       </ul>
     </nav>
   );

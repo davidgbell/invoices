@@ -16,7 +16,7 @@ export const EditorForm = ({
   const formatDate = editorDate.split('').slice(0, 10).join('');
 
   return (
-    <div>
+    <div className='py-6'>
       <form onSubmit={handleNewInvoice}>
         <label htmlFor='editor-name'>Name</label>
         <input
@@ -48,15 +48,17 @@ export const EditorForm = ({
           required
           id='editor-status'
           onChange={e => setEditorStatus(e.target.value)}>
-          <option value=''></option>
+          <option value=''>Status</option>
           <option value='draft'>Draft</option>
           <option value='pending'>Pending</option>
           <option value='paid'>Paid</option>
         </select>
-        <button type='submit'>{`${
-          editInvoiceData ? 'Save' : 'Add Invoice'
-        }`}</button>
-        <button onClick={closeEditor}>Cancel</button>
+        <div className='pt-6'>
+          <button className='mx-3' type='submit'>{`${
+            editInvoiceData ? 'Save' : 'Add Invoice'
+          }`}</button>
+          <button onClick={closeEditor}>Cancel</button>
+        </div>
       </form>
     </div>
   );

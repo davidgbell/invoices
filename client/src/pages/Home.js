@@ -84,11 +84,12 @@ export const Home = () => {
 
   return (
     <div>
-      <h3>Home</h3>
       {!invoiceEditorOpen && user && (
-        <button onClick={() => setInvoiceEditorOpen(true)}>
-          Add new invoice
-        </button>
+        <div className='py-6'>
+          <button onClick={() => setInvoiceEditorOpen(true)}>
+            Add new invoice
+          </button>
+        </div>
       )}
       {invoiceEditorOpen && (
         <>
@@ -129,7 +130,10 @@ export const Home = () => {
       )}
       {user === null && (
         <>
-          <h2>Welcome to invoices</h2>
+          <h3 className='text-3xl font-extrabold leading-9 tracking-tight text-gray-900  sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 py-6'>
+            Welcome
+          </h3>
+          <p>Invoices is a minimal invoice management application.</p>
           <p>
             Don't have an account with us?{' '}
             <Link to='/register'>Register here</Link>

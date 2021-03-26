@@ -7,7 +7,7 @@ Axios.defaults.withCredentials = true;
 function App() {
   return (
     <UserContextProvider>
-      <div>
+      <div className='max-w-2xl mx-auto pt-10 px-6'>
         <Router />
       </div>
     </UserContextProvider>
