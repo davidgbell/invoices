@@ -17,6 +17,8 @@ app.use(
 );
 app.use(cookieParser());
 
+app.listen(5000, () => console.log('app running on server 5000'));
+
 app.use('/invoice', require('./routers/invoiceRouter'));
 app.use('/auth', require('./routers/userRouter'));
 
