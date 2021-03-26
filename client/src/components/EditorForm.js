@@ -48,7 +48,7 @@ export const EditorForm = ({
           required
           id='editor-status'
           onChange={e => setEditorStatus(e.target.value)}>
-          <option value=''>Status</option>
+          <option value=''></option>
           <option value='draft'>Draft</option>
           <option value='pending'>Pending</option>
           <option value='paid'>Paid</option>

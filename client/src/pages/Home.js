@@ -83,6 +83,15 @@ export const Home = () => {
     invoices &&
     invoices.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
+  const filteredInvoices =
+    sortedInvoices &&
+    sortedInvoices.filter(
+      invoice =>
+        invoice.status.toLowerCase().includes(searched) ||
+        invoice.name.toLowerCase().includes(searched) ||
+        invoice.dueDate.includes(searched)
+    );
+
   return (
     <div>
       {!invoiceEditorOpen && user && (
@@ -115,17 +124,17 @@ export const Home = () => {
           />
         </>
       )}
-      {invoices && invoices.length > 0 && sortedInvoices && (
+      {invoices && invoices.length > 0 && filteredInvoices && (
         <>
           <label htmlFor='search'>Search:</label>
           <input
             id='search'
-            // onChange={e => setLoginEmail(e.target.value)}
+            onChange={e => setSearched(e.target.value)}
             type='text'
             placeholder='Try a name or status 🕵️‍♀️'
           />
           <ul>
-            {sortedInvoices.map(invoice => (
+            {filteredInvoices.map(invoice => (
               <Invoice
                 key={invoice._id}
                 id={invoice._id}
@@ -150,7 +159,7 @@ export const Home = () => {
               <Link to='/register'>Register here</Link>
             </p>
           </div>
-          <img src='/screen.png' />
+          {/* <img src='/screen.png' alt='Screen shot of Invoices' /> */}
         </>
       )}
     </div>
