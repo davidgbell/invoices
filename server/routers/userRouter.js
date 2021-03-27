@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken');
 
 router.post('/', async (req, res) => {
   try {
-    const { email, password, passwordVerify } = req.body;
+    const { email, password, passwordVerify, name } = req.body;
 
     // Validation
 
-    if (!email || !password || !passwordVerify) {
+    if (!email || !password || !passwordVerify || !name) {
       return res.status(400).json({
         errorMessage: 'Enter all required fields',
       });
@@ -40,6 +40,7 @@ router.post('/', async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     const newUser = new User({
+      name,
       email,
       passwordHash,
     });
