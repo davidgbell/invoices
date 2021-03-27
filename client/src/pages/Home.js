@@ -133,7 +133,7 @@ export const Home = () => {
             type='text'
             placeholder='Try a name or status 🕵️‍♀️'
           />
-          <ul>
+          <ul className='mb-10'>
             {filteredInvoices.map(invoice => (
               <Invoice
                 key={invoice._id}
@@ -159,7 +159,18 @@ export const Home = () => {
               <Link to='/register'>Register here</Link>
             </p>
           </div>
-          {/* <img src='/screen.png' alt='Screen shot of Invoices' /> */}
+          <p className='mb-10'>
+            Built with <strong>React</strong>, <strong>Nodejs</strong>,{' '}
+            <strong>MongoDB</strong> and <strong>Express</strong> aka the MERN
+            stack. Features Create, Read, Update, Delete (CRUD) functionality
+            and secured with user authentication.
+          </p>
+          <p className='mb-10'>
+            Features a clean responsive design and emojis for a bit of zest 🍋
+          </p>
+          <p className='mb-10'>
+            A Full stack application made with ❤️ by David Bell.
+          </p>
         </>
       )}
     </div>
