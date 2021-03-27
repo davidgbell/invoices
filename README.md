@@ -15,4 +15,4 @@ aka the **MERN** stack
 
 Create, Read, Update, Delete functionality secured with user authentication.
 
-<img src='/public/screen.png' />
+<img src='screen.png' />
