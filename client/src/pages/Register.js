@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { ErrorMessage } from '../components/ErrorMessage';
 import { UserContext } from '../context/UserContext';
+import domain from '../utils/domain';
 
 export const Register = () => {
   const [registerName, setRegisterName] = useState('');
@@ -26,7 +27,7 @@ export const Register = () => {
     };
 
     try {
-      await Axios.post('http://localhost:5000/auth/', registerData);
+      await Axios.post(`${domain}/auth/`, registerData);
     } catch (err) {
       if (err.response) {
         if (err.response.data.errorMessage) {

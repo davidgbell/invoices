@@ -1,10 +1,11 @@
 import React from 'react';
 import Axios from 'axios';
+import domain from '../utils/domain';
 
 export const Invoice = ({ invoice, id, getInvoices, editInvoice }) => {
   const deleteInvoice = async () => {
     if (window.confirm('Do you want to delete invoice?')) {
-      await Axios.delete(`http://localhost:5000/invoice/${id}`);
+      await Axios.delete(`${domain}/invoice/${id}`);
     }
 
     getInvoices();

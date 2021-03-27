@@ -5,6 +5,7 @@ import { EditorForm } from '../components/EditorForm';
 import { UserContext } from '../context/UserContext';
 import { Link } from 'react-router-dom';
 import { ErrorMessage } from '../components/ErrorMessage';
+import domain from '../utils/domain';
 
 export const Home = () => {
   const [invoices, setInvoices] = useState([]);
@@ -25,7 +26,7 @@ export const Home = () => {
   }, [user]);
 
   const getInvoices = async () => {
-    const res = await Axios.get('http://localhost:5000/invoice/');
+    const res = await Axios.get(`${domain}/invoice/`);
     setInvoices(res.data);
   };
 
@@ -50,10 +51,10 @@ export const Home = () => {
 
     try {
       if (!editInvoiceData) {
-        await Axios.post('http://localhost:5000/invoice/', invoiceData);
+        await Axios.post(`${domain}/invoice/`, invoiceData);
       } else {
         await Axios.put(
-          `http://localhost:5000/invoice/${editInvoiceData._id}`,
+          `${domain}/invoice/${editInvoiceData._id}`,
           invoiceData
         );
       }

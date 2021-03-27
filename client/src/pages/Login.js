@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { ErrorMessage } from '../components/ErrorMessage';
+import domain from '../utils/domain';
 
 export const Login = () => {
   const [loginEmail, setLoginEmail] = useState('');
@@ -22,7 +23,7 @@ export const Login = () => {
     };
 
     try {
-      await Axios.post('http://localhost:5000/auth/login', loginData);
+      await Axios.post(`${domain}/auth/login`, loginData);
     } catch (err) {
       if (err.response) {
         if (err.response.data.errorMessage) {
